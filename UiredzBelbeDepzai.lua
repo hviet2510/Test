@@ -2,7 +2,7 @@ local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao1
 
 local Window = redzlib:MakeWindow({
   Title = "Gay Hub",
-  SubTitle = "by BelBelDepZai",
+  SubTitle = "by NamerDepZai",
   SaveFolder = "Redz | redz lib v5.lua"
 })
 
