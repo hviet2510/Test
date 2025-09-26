@@ -1,7 +1,7 @@
 local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/Library-ui/refs/heads/main/Redzhubui"))()
 
 local Window = redzlib:MakeWindow({
-  Title = "Gay Hub",
+  Title = "Namer Hub",
   SubTitle = "by NamerDepZai",
   SaveFolder = "Redz | redz lib v5.lua"
 })
@@ -92,9 +92,47 @@ Tab2:AddToggle({
     Name = "Farm Xương",
     Description = "Tự động farm xương",
     Default = false,
-    Callback = function()
-
+    
+Section:OnChanged(function(Value)
+  _G.AutoFarm_Bone = Value
+end)
+spawn(function()
+  while wait(Sec) do 
+    if _G.AutoFarm_Bone then
+      pcall(function()        
+        local player = game.Players.LocalPlayer
+        local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+        local questUI = player.PlayerGui.Main.Quest
+        local BonesTable = {"Reborn Skeleton","Living Zombie","Demonic Soul","Posessed Mummy"}
+        if not root then return end
+        local bone = GetConnectionEnemies(BonesTable)
+          if bone then
+	        if _G.AcceptQuestC and not questUI.Visible then
+              local questPos = CFrame.new(-9516.99316,172.017181,6078.46533,0,0,-1,0,1,0,1,0,0)
+              _tp(questPos)
+              while (questPos.Position - root.Position).Magnitude > 50 do
+                wait(0.2)
+              end
+              local randomQuest = math.random(1, 4)
+              local questData = {
+                [1] = {"StartQuest", "HauntedQuest2", 2},
+                [2] = {"StartQuest", "HauntedQuest2", 1},
+                [3] = {"StartQuest", "HauntedQuest1", 1},
+                [4] = {"StartQuest", "HauntedQuest1", 2}
+              }                    
+              local success, response = pcall(function()
+                return game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(questData[randomQuest]))
+              end)
+            end
+		    repeat task.wait() Attack.Kill(bone, _G.AutoFarm_Bone) until not _G.AutoFarm_Bone or bone.Humanoid.Health <= 0 or not bone.Parent or (_G.AcceptQuestC and not questUI.Visible)
+          else
+            _tp(CFrame.new(-9495.6806640625, 453.58624267578125, 5977.3486328125)) 	      
+        end
+      end)
     end
+  end
+end)
+      
 })
 
 Tab2:AddToggle({
