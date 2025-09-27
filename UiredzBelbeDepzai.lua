@@ -10,6 +10,7 @@ Window:AddMinimizeButton({
     Button = { Image = "rbxassetid://93777653674500", BackgroundTransparency = 0 },
     Corner = { CornerRadius = UDim.new(0, 5) },
 })
+local PosMsList = {["Pirate Millionaire"] = CFrame.new(-712.8272705078125, 98.5770492553711, 5711.9541015625),["Pistol Billionaire"] = CFrame.new(-723.4331665039062, 147.42906188964844, 5931.9931640625),["Dragon Crew Warrior"] = CFrame.new(7021.50439453125, 55.76270294189453, -730.1290893554688),["Dragon Crew Archer"] = CFrame.new(6625, 378, 244),["Female Islander"] = CFrame.new(4692.7939453125, 797.9766845703125, 858.8480224609375),["Venomous Assailant"] = CFrame.new(4902, 670, 39), ["Marine Commodore"] = CFrame.new(2401, 123, -7589),["Marine Rear Admiral"] = CFrame.new(3588, 229, -7085),["Fishman Raider"] = CFrame.new(-10941, 332, -8760),["Fishman Captain"] = CFrame.new(-11035, 332, -9087),["Forest Pirate"] = CFrame.new(-13446, 413, -7760),["Mythological Pirate"] = CFrame.new(-13510, 584, -6987),["Jungle Pirate"] = CFrame.new(-11778, 426, -10592),["Musketeer Pirate"] = CFrame.new(-13282, 496, -9565),["Reborn Skeleton"] = CFrame.new(-8764, 142, 5963),["Living Zombie"] = CFrame.new(-10227, 421, 6161),["Demonic Soul"] = CFrame.new(-9579, 6, 6194),["Posessed Mummy"] = CFrame.new(-9579, 6, 6194),["Peanut Scout"] = CFrame.new(-1993, 187, -10103),["Peanut President"] = CFrame.new(-2215, 159, -10474),["Ice Cream Chef"] = CFrame.new(-877, 118, -11032),["Ice Cream Commander"] = CFrame.new(-877, 118, -11032),["Cookie Crafter"] = CFrame.new(-2021, 38, -12028),["Cake Guard"] = CFrame.new(-2024, 38, -12026),["Baking Staff"] = CFrame.new(-1932, 38, -12848),["Head Baker"] = CFrame.new(-1932, 38, -12848),["Cocoa Warrior"] = CFrame.new(95, 73, -12309),["Chocolate Bar Battler"] = CFrame.new(647, 42, -12401),["Sweet Thief"] = CFrame.new(116, 36, -12478),["Candy Rebel"] = CFrame.new(47, 61, -12889),["Ghost"] = CFrame.new(5251, 5, 1111)}
 
 local Tab = Window:MakeTab({"Discord", "info"})
 
@@ -86,7 +87,12 @@ Tab2:AddToggle({
 })
 
 
-local Section = Tab2:AddSection({"Xương"})
+
+    
+
+Tab2:AddToggle({
+    Name = "Tự Động Soul Reaper",
+    Description = "Triệu hồi và tiêu diệt Soul local Section = Tab2:AddSection({"Xương"})
 
 Tab2:AddToggle({
     Name = "Farm Xương",
@@ -96,52 +102,71 @@ Tab2:AddToggle({
         _G.AutoFarm_Bone = Value
     end
 })
-spawn(function()
-  while wait(Sec) do 
-    if _G.AutoFarm_Bone then
-      pcall(function()        
-        local player = game.Players.LocalPlayer
-        local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-        local questUI = player.PlayerGui.Main.Quest
-        local BonesTable = {"Reborn Skeleton","Living Zombie","Demonic Soul","Posessed Mummy"}
-        if not root then return end
-        local bone = GetConnectionEnemies(BonesTable)
-          if bone then
-	        if _G.AcceptQuestC and not questUI.Visible then
-              local questPos = CFrame.new(-9516.99316,172.017181,6078.46533,0,0,-1,0,1,0,1,0,0)
-              _tp(questPos)
-              while (questPos.Position - root.Position).Magnitude > 50 do
-                wait(0.2)
-              end
-              local randomQuest = math.random(1, 4)
-              local questData = {
-                [1] = {"StartQuest", "HauntedQuest2", 2},
-                [2] = {"StartQuest", "HauntedQuest2", 1},
-                [3] = {"StartQuest", "HauntedQuest1", 1},
-                [4] = {"StartQuest", "HauntedQuest1", 2}
-              }                    
-              local success, response = pcall(function()
-                return game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(questData[randomQuest]))
-              end)
-            end
-		    repeat task.wait() Attack.Kill(bone, _G.AutoFarm_Bone) until not _G.AutoFarm_Bone or bone.Humanoid.Health <= 0 or not bone.Parent or (_G.AcceptQuestC and not questUI.Visible)
-          else
-            _tp(CFrame.new(-9495.6806640625, 453.58624267578125, 5977.3486328125)) 	      
-        end
-      end)
-    end
-  end
-end)
-    
 
 Tab2:AddToggle({
-    Name = "Tự Động Soul Reaper",
-    Description = "Triệu hồi và tiêu diệt Soul Reaper",
-    Default = false,
-    Callback = function()
-
+    Name = "Nhận Nhiệm Vụ Xương",
+    Description = "Tự động nhận nhiệm vụ xương",
+    Default = true,
+    Callback = function(Value)
+        _G.AcceptQuestC = Value
     end
 })
+
+spawn(function()
+    while task.wait(Sec or 0.1) do
+        if _G.AutoFarm_Bone and World3 then
+            pcall(function()
+                if not game:IsLoaded() then return end
+                local player = game.Players.LocalPlayer
+                local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+                local humanoid = player.Character and player.Character:FindFirstChild("Humanoid")
+                local questUI = player.PlayerGui.Main.Quest
+                if not root or not humanoid or humanoid.Health <= 0 then return end
+
+                local boneEnemies = {"Reborn Skeleton", "Living Zombie", "Demonic Soul", "Posessed Mummy"}
+                local farmPos = PosMsList["Reborn Skeleton"] or CFrame.new(-8764, 142, 5963)
+
+                if _G.AcceptQuestC and not (questUI.Visible and questUI.Container.QuestTitle.Title.Text:find("Haunted")) then
+                    local questPos = CFrame.new(-9516.99316, 172.017181, 6078.46533)
+                    TW:Create(root, TweenInfo.new((questPos.Position - root.Position).Magnitude / 200), {CFrame = questPos}):Play()
+                    wait(0.5)
+                    local questData = {
+                        [1] = {"StartQuest", "HauntedQuest2", 2},
+                        [2] = {"StartQuest", "HauntedQuest2", 1},
+                        [3] = {"StartQuest", "HauntedQuest1", 1},
+                        [4] = {"StartQuest", "HauntedQuest1", 2}
+                    }
+                    for i = 1, 3 do
+                        local success = pcall(function()
+                            game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(questData[math.random(1, 4)]))
+                        end)
+                        if success and questUI.Visible and questUI.Container.QuestTitle.Title.Text:find("Haunted") then break end
+                        task.wait(0.2)
+                    end
+                end
+
+                TW:Create(root, TweenInfo.new((farmPos.Position - root.Position).Magnitude / 200), {CFrame = farmPos}):Play()
+                wait(0.5)
+                local enemy = GetConnectionEnemies(boneEnemies)
+                if enemy and _G.Attack_Mob then
+                    if _B then BringEnemy() end
+                    EquipWeapon(_G.SelectWeapon or "Melee")
+                    repeat task.wait() Attack.Kill(enemy, _G.AutoFarm_Bone)
+                    until not _G.AutoFarm_Bone or not enemy.Parent or enemy.Humanoid.Health <= 0 or (_G.AcceptQuestC and not questUI.Visible)
+                else
+                    TW:Create(root, TweenInfo.new((farmPos.Position - root.Position).Magnitude / 200), {CFrame = farmPos}):Play()
+                end
+            end)
+        elseif _G.AutoFarm_Bone then
+            Tab2:AddParagraph({
+                Name = "Cảnh Báo Farm Xương",
+                Description = "Chỉ hoạt động ở Third Sea"
+            })
+            _G.AutoFarm_Bone = false
+            Tab2:AddToggle({ Name = "Farm Xương" }):SetValue(false)
+        end
+    end
+end)
 
 Tab2:AddToggle({
     Name = "Đổi Xương",
