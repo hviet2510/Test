@@ -132,8 +132,7 @@ spawn(function()
     end
   end
 end)
-      
-})
+    
 
 Tab2:AddToggle({
     Name = "Tự Động Soul Reaper",
