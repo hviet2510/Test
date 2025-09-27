@@ -86,14 +86,8 @@ Tab2:AddToggle({
     end
 })
 
-
-
+local Section = Tab2:AddSection({"Xương"})
     
-
-Tab2:AddToggle({
-    Name = "Tự Động Soul Reaper",
-    Description = "Triệu hồi và tiêu diệt Soul local Section = Tab2:AddSection({"Xương"})
-
 Tab2:AddToggle({
     Name = "Farm Xương",
     Description = "Tự động farm xương",
@@ -126,7 +120,7 @@ spawn(function()
                 local boneEnemies = {"Reborn Skeleton", "Living Zombie", "Demonic Soul", "Posessed Mummy"}
                 local farmPos = PosMsList["Reborn Skeleton"] or CFrame.new(-8764, 142, 5963)
 
-                if _G.AcceptQuestC and not (questUI.Visible and questUI.Container.QuestTitle.Title.Text:find("Haunted")) then
+                if _G.AcceptQuestC and questUI and questUI.Container and questUI.Container.QuestTitle and questUI.Container.QuestTitle.Title and not (questUI.Visible and questUI.Container.QuestTitle.Title.Text:find("Haunted")) then
                     local questPos = CFrame.new(-9516.99316, 172.017181, 6078.46533)
                     TW:Create(root, TweenInfo.new((questPos.Position - root.Position).Magnitude / 200), {CFrame = questPos}):Play()
                     wait(0.5)
@@ -153,7 +147,7 @@ spawn(function()
                     EquipWeapon(_G.SelectWeapon or "Melee")
                     repeat task.wait() Attack.Kill(enemy, _G.AutoFarm_Bone)
                     until not _G.AutoFarm_Bone or not enemy.Parent or enemy.Humanoid.Health <= 0 or (_G.AcceptQuestC and not questUI.Visible)
-                else
+                elseif not enemy then
                     TW:Create(root, TweenInfo.new((farmPos.Position - root.Position).Magnitude / 200), {CFrame = farmPos}):Play()
                 end
             end)
@@ -167,6 +161,7 @@ spawn(function()
         end
     end
 end)
+
 
 Tab2:AddToggle({
     Name = "Đổi Xương",
