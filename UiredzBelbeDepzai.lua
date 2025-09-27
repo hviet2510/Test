@@ -92,10 +92,10 @@ Tab2:AddToggle({
     Name = "Farm Xương",
     Description = "Tự động farm xương",
     Default = false,
-    
-Section:OnChanged(function(Value)
-  _G.AutoFarm_Bone = Value
-end)
+    Callback = function(Value)
+        _G.AutoFarm_Bone = Value
+    end
+})
 spawn(function()
   while wait(Sec) do 
     if _G.AutoFarm_Bone then
