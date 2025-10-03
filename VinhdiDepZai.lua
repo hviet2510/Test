@@ -656,10 +656,10 @@ end
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
-    Title="NakHub new [ Premium ]",
-    SubTitle="  by Naknohack", 
+    Title="Vinh dí [ Premium ]",
+    SubTitle="  by VietDepZai", 
     TabWidth=160, 
-    Theme="NakHub",
+    Theme="díHub",
     Acrylic=false,
     Size=UDim2.fromOffset(530, 350), 
     MinimizeKey=Enum.KeyCode.End
@@ -6990,3 +6990,4 @@ task.spawn(function()
   end)
 end)
 Window:SelectTab(1)
+
