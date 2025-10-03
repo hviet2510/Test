@@ -671,7 +671,7 @@ screenGui.Parent = game.CoreGui
 local toggleButton = Instance.new("ImageButton")
 toggleButton.Size = UDim2.new(0, 50, 0, 50)
 toggleButton.Position = UDim2.new(0.15, 0, 0.15, 0)
-toggleButton.Image = "rbxassetid://763020862683"
+toggleButton.Image = "rbxassetid://100306458933414"
 toggleButton.BackgroundTransparency = 1
 toggleButton.Parent = screenGui
 
@@ -751,20 +751,20 @@ toggleButton.MouseButton1Click:Connect(function()
     end
 end)
 local Tabs = {
-  Main = Window:AddTab({Title = " Farming", Icon = "rbxassetid://763020862683"}),
-  Settings = Window:AddTab({Title = " Setting Farm", Icon = "rbxassetid://763020862683"}),
-  Melee = Window:AddTab({Title = " Auto Get Melee V2", Icon = "rbxassetid://763020862683"}),
-  Quests = Window:AddTab({Title = " Farm vật phẩm", Icon = "rbxassetid://763020862683"}),
-  SeaEvent = Window:AddTab({Title = " Sea Events", Icon = "rbxassetid://763020862683"}),
-  Mirage = Window:AddTab({Title = " Mirage + RaceV4", Icon = "rbxassetid://763020862683"}),
-  Drago = Window:AddTab({Title = " Drago Dojo", Icon = "rbxassetid://763020862683"}),
-  Prehistoric = Window:AddTab({Title = " Prehistoric", Icon = "rbxassetid://763020862683"}),
-  Raids = Window:AddTab({Title = " Raid", Icon = "rbxassetid://763020862683"}),
-  Combat = Window:AddTab({Title = " Combat PVP", Icon = "rbxassetid://763020862683"}),
-  Travel = Window:AddTab({Title = " Dịch chuyển", Icon = "rbxassetid://763020862683"}),
-  Fruit = Window:AddTab({Title = " Fruits", Icon = "rbxassetid://763020862683"}),
-  Shop = Window:AddTab({Title = " Cửa hàng", Icon = "rbxassetid://763020862683"}),
-  Misc = Window:AddTab({Title = " Linh tinh", Icon = "rbxassetid://763020862683"})
+  Main = Window:AddTab({Title = " Farming", Icon = "rbxassetid://100306458933414"}),
+  Settings = Window:AddTab({Title = " Setting Farm", Icon = "rbxassetid://100306458933414"}),
+  Melee = Window:AddTab({Title = " Auto Get Melee V2", Icon = "rbxassetid://100306458933414"}),
+  Quests = Window:AddTab({Title = " Farm vật phẩm", Icon = "rbxassetid://100306458933414"}),
+  SeaEvent = Window:AddTab({Title = " Sea Events", Icon = "rbxassetid://100306458933414"}),
+  Mirage = Window:AddTab({Title = " Mirage + RaceV4", Icon = "rbxassetid://100306458933414"}),
+  Drago = Window:AddTab({Title = " Drago Dojo", Icon = "rbxassetid://100306458933414"}),
+  Prehistoric = Window:AddTab({Title = " Prehistoric", Icon = "rbxassetid://100306458933414"}),
+  Raids = Window:AddTab({Title = " Raid", Icon = "rbxassetid://100306458933414"}),
+  Combat = Window:AddTab({Title = " Combat PVP", Icon = "rbxassetid://100306458933414"}),
+  Travel = Window:AddTab({Title = " Dịch chuyển", Icon = "rbxassetid://100306458933414"}),
+  Fruit = Window:AddTab({Title = " Fruits", Icon = "rbxassetid://100306458933414"}),
+  Shop = Window:AddTab({Title = " Cửa hàng", Icon = "rbxassetid://100306458933414"}),
+  Misc = Window:AddTab({Title = " Linh tinh", Icon = "rbxassetid://100306458933414"})
 }
 
 Tabs.Main:AddButton({
@@ -6990,5 +6990,6 @@ task.spawn(function()
   end)
 end)
 Window:SelectTab(1)
+
 
 
