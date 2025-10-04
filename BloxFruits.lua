@@ -1,6 +1,6 @@
 local Library = loadstring(game:HttpGet("https://you.whimper.xyz/sources/btteam/SystemUI.lua"))() -- LIBRARY
 
-local Window = Library:CreateWindow('🌌 Nytherune Hub - Blox Fruits') -- CREATE WINDOW
+local Window = Library:CreateWindow('🇻🇳 I LOVE ') -- CREATE WINDOW
 
 local Tab = { -- CREATE TABS
     Tab_1 = Window:addTab('#Home'),
@@ -8884,4 +8884,5 @@ spawn(function()
         end
     end
 end)
+
 
