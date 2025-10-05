@@ -175,8 +175,8 @@ hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death
 hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 Window = Fluent:CreateWindow({
-    Title = " NakHubBF",
-    SubTitle="by Naknohack", 
+    Title = " Namer ",
+    SubTitle="by Việt đẹp zai", 
     TabWidth=150, 
     Theme="Darker",
     Acrylic=false,
@@ -9327,4 +9327,5 @@ if currentTime - lastNotificationTime >= notificationCooldown then
         Duration = 1
     })
     lastNotificationTime = currentTime
+
 end
