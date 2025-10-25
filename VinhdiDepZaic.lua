@@ -654,25 +654,31 @@ QuestNeta = function()
   }
 end
 
+	-- Load Fluent UI
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
-    Title="Vinh dí [ Premium ]",
-    SubTitle="  by VietDepZai", 
-    TabWidth=160, 
-    Theme="díHub",
-    Acrylic=false,
-    Size=UDim2.fromOffset(530, 350), 
-    MinimizeKey=Enum.KeyCode.End
+    Title = "Vinh dí [ Premium ]",
+    SubTitle = "by VietDepZai",
+    TabWidth = 160,
+    Theme = "díHub",
+    Acrylic = false,
+    Size = UDim2.fromOffset(530, 350),
+    MinimizeKey = Enum.KeyCode.End
 })
+
+-- Floating toggle button
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "ControlGUI"
 screenGui.Parent = game.CoreGui
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 local toggleButton = Instance.new("ImageButton")
 toggleButton.Size = UDim2.new(0, 50, 0, 50)
 toggleButton.Position = UDim2.new(0.15, 0, 0.15, 0)
-toggleButton.Image = "rbxassetid://100306458933414"
-toggleButton.BackgroundTransparency = 1
+toggleButton.Image = "rbxassetid://76302086268396" -- 🧩 Logo: jack-j97
+toggleButton.BackgroundTransparency = 0.15
+toggleButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+toggleButton.AutoButtonColor = false
 toggleButton.Parent = screenGui
 
 local corner = Instance.new("UICorner")
@@ -682,29 +688,29 @@ corner.Parent = toggleButton
 local stroke = Instance.new("UIStroke")
 stroke.Thickness = 2
 stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+stroke.Color = Color3.fromRGB(255, 0, 0)
 stroke.Parent = toggleButton
 
-local rainbowColors = {
-    Color3.fromRGB(255, 0, 0),    -- đỏ
-    Color3.fromRGB(255, 127, 0),  -- cam
-    Color3.fromRGB(255, 255, 0),  -- vàng
-    Color3.fromRGB(0, 255, 0),    -- lục
-    Color3.fromRGB(0, 255, 255),  -- lam
-    Color3.fromRGB(0, 0, 255),    -- chàm
-    Color3.fromRGB(139, 0, 255),  -- tím
-}
-
+-- 🌈 Rainbow border animation (mượt)
 task.spawn(function()
-    local i = 1
-    while true do
-        stroke.Color = rainbowColors[i]
-        i = (i % #rainbowColors) + 1
-        task.wait(1) -- thời gian đổi màu
+    local hue = 0
+    while task.wait(0.05) do
+        hue = (hue + 1) % 360
+        stroke.Color = Color3.fromHSV(hue / 360, 1, 1)
     end
 end)
-local isFluentVisible = true
 
+-- Hover highlight
+toggleButton.MouseEnter:Connect(function()
+    toggleButton.BackgroundTransparency = 0.05
+end)
+toggleButton.MouseLeave:Connect(function()
+    toggleButton.BackgroundTransparency = 0.15
+end)
+
+-- 📦 Dragging
 local dragging, dragInput, dragStart, startPos
+local UserInputService = game:GetService("UserInputService")
 
 local function update(input)
     local delta = input.Position - dragStart
@@ -717,7 +723,7 @@ local function update(input)
 end
 
 toggleButton.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragging = true
         dragStart = input.Position
         startPos = toggleButton.Position
@@ -730,42 +736,43 @@ toggleButton.InputBegan:Connect(function(input)
 end)
 
 toggleButton.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement then
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
         dragInput = input
     end
 end)
 
-game:GetService("UserInputService").InputChanged:Connect(function(input)
+UserInputService.InputChanged:Connect(function(input)
     if dragging and input == dragInput then
         update(input)
     end
 end)
 
+-- 👁️ Toggle Fluent visibility
+local isFluentVisible = true
 toggleButton.MouseButton1Click:Connect(function()
     isFluentVisible = not isFluentVisible
-
-    if isFluentVisible then
-        Window:Minimize(false) -- Mở lại cửa sổ
-    else
-        Window:Minimize(true) -- Thu nhỏ cửa sổ
-    end
+    pcall(function()
+        Window:Minimize(not isFluentVisible)
+    end)
+    toggleButton.ImageColor3 = isFluentVisible and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(120, 120, 120)
 end)
+
 local Tabs = {
-  Main = Window:AddTab({Title = " Farming", Icon = "rbxassetid://100306458933414"}),
-  Settings = Window:AddTab({Title = " Setting Farm", Icon = "rbxassetid://100306458933414"}),
-  Melee = Window:AddTab({Title = " Auto Get Melee V2", Icon = "rbxassetid://100306458933414"}),
-  Quests = Window:AddTab({Title = " Farm vật phẩm", Icon = "rbxassetid://100306458933414"}),
-  SeaEvent = Window:AddTab({Title = " Sea Events", Icon = "rbxassetid://100306458933414"}),
-  Mirage = Window:AddTab({Title = " Mirage + RaceV4", Icon = "rbxassetid://100306458933414"}),
-  Drago = Window:AddTab({Title = " Drago Dojo", Icon = "rbxassetid://100306458933414"}),
-  Prehistoric = Window:AddTab({Title = " Prehistoric", Icon = "rbxassetid://100306458933414"}),
-  Raids = Window:AddTab({Title = " Raid", Icon = "rbxassetid://100306458933414"}),
-  Combat = Window:AddTab({Title = " Combat PVP", Icon = "rbxassetid://100306458933414"}),
-  Travel = Window:AddTab({Title = " Dịch chuyển", Icon = "rbxassetid://100306458933414"}),
-  Fruit = Window:AddTab({Title = " Fruits", Icon = "rbxassetid://100306458933414"}),
-  Shop = Window:AddTab({Title = " Cửa hàng", Icon = "rbxassetid://100306458933414"}),
-  Misc = Window:AddTab({Title = " Linh tinh", Icon = "rbxassetid://100306458933414"})
-}
+  Main = Window:AddTab({Title = " Farming", Icon = "rbxassetid://76302086268396"}),
+  Settings = Window:AddTab({Title = " Setting Farm", Icon = "rbxassetid://76302086268396"}),
+  Melee = Window:AddTab({Title = " Auto Get Melee V2", Icon = "rbxassetid://76302086268396"}),
+  Quests = Window:AddTab({Title = " Farm vật phẩm", Icon = "rbxassetid://76302086268396"}),
+  SeaEvent = Window:AddTab({Title = " Sea Events", Icon = "rbxassetid://76302086268396"}),
+  Mirage = Window:AddTab({Title = " Mirage + RaceV4", Icon = "rbxassetid://76302086268396"}),
+  Drago = Window:AddTab({Title = " Drago Dojo", Icon = "rbxassetid://76302086268396"}),
+  Prehistoric = Window:AddTab({Title = " Prehistoric", Icon = "rbxassetid://76302086268396"}),
+  Raids = Window:AddTab({Title = " Raid", Icon = "rbxassetid://76302086268396"}),
+  Combat = Window:AddTab({Title = " Combat PVP", Icon = "rbxassetid://76302086268396"}),
+  Travel = Window:AddTab({Title = " Dịch chuyển", Icon = "rbxassetid://76302086268396"}),
+  Fruit = Window:AddTab({Title = " Fruits", Icon = "rbxassetid://76302086268396"}),
+  Shop = Window:AddTab({Title = " Cửa hàng", Icon = "rbxassetid://76302086268396"}),
+  Misc = Window:AddTab({Title = " Linh tinh", Icon = "rbxassetid://76302086268396"})
+	}
 
 Tabs.Main:AddButton({
         Title="Link Join Sever Discord",
@@ -6990,6 +6997,7 @@ task.spawn(function()
   end)
 end)
 Window:SelectTab(1)
+
 
 
 
